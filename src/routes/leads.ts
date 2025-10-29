@@ -10,11 +10,16 @@ const leadRoutes = new Hono();
 leadRoutes.post('/upload', async (c) => {
   try {
     // Get file from form data
-    const formData = await c.req.formData();
-    const file = formData.get('file') as File;
+    const body = await c.req.parseBody();
+    const file = body.file as File;
 
     if (!file) {
       throw new APIError('VALIDATION_ERROR', 'No file provided', 400);
+    }
+
+    // Check if it's actually a File object
+    if (!(file instanceof File)) {
+      throw new APIError('VALIDATION_ERROR', 'Invalid file format', 400);
     }
 
     // Check file type
