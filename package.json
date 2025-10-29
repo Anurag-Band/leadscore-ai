@@ -4,9 +4,15 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "hono": "^4.10.3"
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.2.3",
+    "hono": "^4.10.3",
+    "openai": "^6.7.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^24.9.2",
+    "typescript": "^5.9.3"
   }
 }
