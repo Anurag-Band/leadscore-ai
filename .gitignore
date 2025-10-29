@@ -1,10 +1,41 @@
-# deps
+# Dependencies
 node_modules/
 docs
 settings.local.json
 
-# environment variables
+# Environment variables
 .env
+.env.local
+.env.*.local
 
-# build output
+# Build output
 dist/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test output
+coverage/
+test-results.csv
+
+# Temporary files
+tmp/
+temp/
+*.tmp
