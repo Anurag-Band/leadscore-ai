@@ -2,14 +2,28 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import 'dotenv/config'
+import { errorHandler } from './utils/errorHandler'
 
 const app = new Hono()
 
-// Middleware
+// Global middleware
 app.use('*', logger())
 app.use('*', cors())
 
+// Error handling
+app.onError(errorHandler)
+
 // Health check endpoint
+app.get('/health', (c) => {
+  return c.json({
+    status: 'healthy',
+    message: 'LeadScore AI Backend Service',
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  })
+})
+
+// Root endpoint
 app.get('/', (c) => {
   return c.json({
     status: 'ok',
@@ -17,19 +31,6 @@ app.get('/', (c) => {
     version: '1.0.0',
     timestamp: new Date().toISOString()
   })
-})
-
-// Error handling
-app.onError((err, c) => {
-  console.error(`Error: ${err.message}`)
-  return c.json({
-    success: false,
-    error: {
-      code: 'INTERNAL_ERROR',
-      message: err.message
-    },
-    timestamp: new Date().toISOString()
-  }, 500)
 })
 
 // 404 handler
