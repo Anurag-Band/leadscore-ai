@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import 'dotenv/config'
 import { errorHandler } from './utils/errorHandler'
+import api from './routes'
 
 const app = new Hono()
 
@@ -12,6 +13,9 @@ app.use('*', cors())
 
 // Error handling
 app.onError(errorHandler)
+
+// Mount API routes
+app.route('/', api)
 
 // Health check endpoint
 app.get('/health', (c) => {
@@ -23,15 +27,6 @@ app.get('/health', (c) => {
   })
 })
 
-// Root endpoint
-app.get('/', (c) => {
-  return c.json({
-    status: 'ok',
-    message: 'LeadScore AI Backend Service',
-    version: '1.0.0',
-    timestamp: new Date().toISOString()
-  })
-})
 
 // 404 handler
 app.notFound((c) => {
